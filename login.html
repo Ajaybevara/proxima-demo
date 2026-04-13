@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxima LMS - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-purple: #4B1D6B;
+            --light-bg: #E8F0FE;
+            --text-gray: #666;
+            --gradient: linear-gradient(135deg, #DCD0F1 0%, #A589D9 100%);
+        }
+        * { box-sizing: border-box; }
+        body, html {
+            margin: 0; padding: 0; min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f0f2f5;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .login-card {
+            display: flex; width: 1000px; max-width: 90%;
+            background: white; border-radius: 24px;
+            overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        .branding {
+            flex: 1; background: var(--gradient);
+            display: flex; justify-content: center; align-items: center;
+            padding: 40px;
+        }
+        .branding img { width: 80%; max-width: 280px; height: auto; }
+        .form-area {
+            flex: 1.2; padding: 60px;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .form-area h1 { font-size: 2rem; margin: 0 0 10px 0; color: #333; }
+        .subtitle { color: var(--text-gray); margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #444; }
+        .input-wrapper { position: relative; }
+        .input-wrapper input {
+            width: 100%; padding: 14px; background: var(--light-bg);
+            border: none; border-radius: 10px; font-size: 15px; outline: none;
+        }
+        .toggle-password { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #555; }
+        .btn-primary {
+            background: var(--primary-purple); color: white; border: none;
+            padding: 16px; border-radius: 10px; font-size: 16px; font-weight: 600;
+            cursor: pointer; width: 100%; transition: 0.3s; margin-top: 20px;
+        }
+        .btn-primary:hover { opacity: 0.9; }
+        @media (max-width: 768px) {
+            .login-card { flex-direction: column; width: 100%; max-width: 500px; }
+            .branding { padding: 40px 20px; }
+            .form-area { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="branding">
+            <img src="kalpra-logo.png" alt="ProximaLMS Logo">
+        </div>
+        <div class="form-area">
+            <h1>Login</h1>
+            <p class="subtitle">Enter your credentials to login your account</p>
+            <form id="authForm">
+                <div class="input-group">
+                    <label>Email</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="email" placeholder="email@kalpra.com" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" placeholder="••••••••" required>
+                        <i class="fa-regular fa-eye toggle-password" id="togglePw"></i>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('authForm').onsubmit = function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (email === "student@kalpra.com" && password === "kalpra123") {
+                window.location.href = 'index.html';
+            } 
+            else if (email === "admin@kalpra.com" && password === "admin123") {
+                window.location.href = 'admin-dashboard.html';
+            } 
+            else {
+                alert("Invalid Email or Password. Please try again.");
+            }
+        };
+
+        document.getElementById('togglePw').onclick = function() {
+            const pw = document.getElementById('password');
+            if (pw.type === "password") {
+                pw.type = "text";
+                this.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                pw.type = "password";
+                this.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        };
+    </script>
+</body>
+</html>

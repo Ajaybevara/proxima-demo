@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Knowledge Assessment - ProximaLMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-purple: #4B1D6B;
+            --secondary-purple: #6a1b9a;
+            --bg-light: #f4f7f6;
+            --success: #2ecc71;
+            --warning: #f1c40f;
+        }
+
+        /* Exam Card Styling */
+        .exam-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary-purple);
+            transition: transform 0.2s;
+        }
+
+        .exam-card:hover { transform: translateY(-3px); }
+
+        .exam-info h4 { margin: 0 0 8px 0; font-size: 1.2rem; color: #333; }
+        .exam-meta { display: flex; gap: 15px; color: #666; font-size: 0.9rem; }
+        .exam-meta span i { margin-right: 5px; color: var(--secondary-purple); }
+
+        /* Active Exam UI */
+        #activeExamArea {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .timer {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #e74c3c;
+            background: #ffeaea;
+            padding: 8px 15px;
+            border-radius: 8px;
+        }
+
+        .option-label {
+            display: block;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            background: #f8f9fa;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .option-label:hover { border-color: var(--secondary-purple); background: #f3e5f5; }
+        input[type="radio"]:checked + .option-label {
+            background: var(--primary-purple);
+            color: white;
+            border-color: var(--primary-purple);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--success);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        /* Result Styles */
+        .result-screen {
+            text-align: center;
+            padding: 40px;
+        }
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--primary-purple);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+        }
+
+        @media (max-width: 768px) {
+            .exam-card { flex-direction: column; text-align: center; gap: 20px; }
+            .page-layout { flex-direction: column; }
+            .sidebar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="ttr-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="index.html">
+                    <img src="kalpra-logo.png" alt="ProximaLMS Logo" class="header-logo">
+                </a>
+            </div>
+            <div class="profile-circle" title="Rajasekhar Bevara">RB</div>
+        </div>
+    </header>
+
+    <div class="page-layout" style="display: flex;">
+        <aside class="sidebar">
+            <div class="sidebar-title">Learning</div>
+            <nav>
+                <a href="index.html" class="menu-item">🏠 Dashboard</a>
+                <a href="courses.html" class="menu-item">📚 Course View</a>
+                <a href="exams.html" class="menu-item active">📝 Exams</a>
+                <a href="login.html" class="menu-item">🚪 Logout</a>
+            </nav>
+        </aside>
+
+        <main class="main-panel">
+            <div class="content-header">
+                <h1>Assessment Center</h1>
+                <p>Validate your skills and earn AI certifications.</p>
+            </div>
+
+            <!-- EXAM LIST VIEW -->
+            <div id="examListView">
+                <div class="exam-card">
+                    <div class="exam-info">
+                        <h4>Generative AI Mastery Quiz</h4>
+                        <div class="exam-meta">
+                            <span><i class="fa-solid fa-clock"></i> 20 Mins</span>
+                            <span><i class="fa-solid fa-file-lines"></i> 10 Questions</span>
+                            <span><i class="fa-solid fa-star"></i> Intermediate</span>
+                        </div>
+                    </div>
+                    <button onclick="startExam()" class="btn-primary" style="padding: 12px 30px; width: auto;">Start Now</button>
+                </div>
+
+                <div class="exam-card" style="opacity: 0.6; border-left-color: #ccc;">
+                    <div class="exam-info">
+                        <h4>Deep Learning Fundamentals</h4>
+                        <div class="exam-meta">
+                            <span><i class="fa-solid fa-clock"></i> 45 Mins</span>
+                            <span><i class="fa-solid fa-file-lines"></i> 30 Questions</span>
+                        </div>
+                    </div>
+                    <button disabled class="btn-primary" style="background: #999; width: auto;">Locked</button>
+                </div>
+            </div>
+
+            <!-- ACTIVE EXAM VIEW -->
+            <div id="activeExamArea">
+                <div class="progress-container">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+                <div class="question-header">
+                    <span id="questionCounter" style="font-weight: 600; color: var(--primary-purple);">Question 1 of 5</span>
+                    <div class="timer"><i class="fa-solid fa-hourglass-half"></i> <span id="timeRemaining">10:00</span></div>
+                </div>
+
+                <div id="questionContent">
+                    <h3 id="questionText" style="margin-bottom: 25px;">What does LLM stand for in Generative AI?</h3>
+                    <div class="options-list">
+                        <input type="radio" name="answer" id="opt1" hidden>
+                        <label for="opt1" class="option-label">Logical Learning Machine</label>
+
+                        <input type="radio" name="answer" id="opt2" hidden>
+                        <label for="opt2" class="option-label">Large Language Model</label>
+
+                        <input type="radio" name="answer" id="opt3" hidden>
+                        <label for="opt3" class="option-label">Linear Level Mapping</label>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; display: flex; justify-content: flex-end;">
+                    <button onclick="nextQuestion()" id="nextBtn" class="btn-primary" style="width: 200px;">Next Question</button>
+                </div>
+            </div>
+
+            <!-- RESULT VIEW -->
+            <div id="resultView" class="result-screen" style="display: none;">
+                <div class="score-circle">
+                    <span style="font-size: 0.9rem;">Your Score</span>
+                    <h2 style="font-size: 3rem; margin: 0;">80%</h2>
+                </div>
+                <h2 style="color: var(--primary-purple);">Congratulations, Rajasekhar!</h2>
+                <p>You have successfully passed the Generative AI Assessment.</p>
+                <div style="margin-top: 30px;">
+                    <button onclick="location.reload()" class="btn-primary" style="width: auto; padding: 12px 40px;">Back to Dashboard</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const totalSteps = 5;
+
+        function startExam() {
+            document.getElementById('examListView').style.display = 'none';
+            document.getElementById('activeExamArea').style.display = 'block';
+            startTimer(600); // 10 minutes
+        }
+
+        function nextQuestion() {
+            currentStep++;
+            if (currentStep < totalSteps) {
+                // Update Progress
+                let percent = (currentStep / totalSteps) * 100;
+                document.getElementById('progressBar').style.width = percent + '%';
+                document.getElementById('questionCounter').innerText = `Question ${currentStep + 1} of ${totalSteps}`;
+                
+                // Reset radio buttons for next question
+                document.querySelectorAll('input[name="answer"]').forEach(input => input.checked = false);
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('activeExamArea').style.display = 'none';
+            document.getElementById('resultView').style.display = 'block';
+            localStorage.setItem('examPassed', 'true');
+        }
+
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            let display = document.getElementById('timeRemaining');
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.textContent = minutes + ":" + seconds;
+                if (--timer < 0) { showResults(); }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

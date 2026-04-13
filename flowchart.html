@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ProximaLMS - Flowchart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        /* Responsive Design for Flowchart */
+        @media (max-width: 1024px) {
+            .flowchart-container {
+                padding: 20px !important;
+                overflow-x: auto !important;
+            }
+
+            .mermaid {
+                min-width: 100% !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-panel {
+                padding: 15px !important;
+            }
+
+            .flowchart-container {
+                padding: 15px !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+
+            .mermaid {
+                transform: scale(0.9) !important;
+                transform-origin: top left !important;
+                width: 111% !important;
+            }
+
+            .chart-panel {
+                padding: 15px !important;
+            }
+
+            .chart-panel h3 {
+                font-size: 1.1rem !important;
+                margin-bottom: 15px !important;
+            }
+
+            button {
+                padding: 10px 15px !important;
+                font-size: 0.9rem !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .flowchart-container {
+                padding: 10px !important;
+                overflow-x: auto !important;
+            }
+
+            .mermaid {
+                transform: scale(0.8) !important;
+                transform-origin: top left !important;
+                width: 125% !important;
+            }
+
+            .chart-panel {
+                padding: 12px !important;
+                margin-top: 15px !important;
+            }
+
+            .chart-panel h3 {
+                font-size: 0.95rem !important;
+            }
+
+            button {
+                padding: 8px 12px !important;
+                font-size: 0.85rem !important;
+                margin-top: 10px !important;
+            }
+
+            a {
+                padding: 10px 15px !important;
+                font-size: 0.9rem !important;
+                display: inline-block !important;
+                margin-bottom: 10px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Professional Header -->
+   <header class="ttr-header">
+    <div class="header-container">
+        <div class="logo-area">
+            <a href="index.html">
+                <img src="kalpra-logo.png" alt="ProximaLMS Logo" class="header-logo">
+            </a>
+        </div>
+        <div class="profile-circle" title="Rajasekhar Bevara">RB</div>
+    </div>
+</header>
+
+    <!-- Slow Moving Marquee -->
+    <div class="marquee-ticker">
+        <div class="marquee-content" id="marquee-flowchart">
+            <span class="marquee-item">📊 Explore the ProximaLMS Flowchart</span>
+            <span class="marquee-item">🚀 Course Enrollment Process</span>
+            <span class="marquee-item">📝 Exam Generation and Assessment</span>
+        </div>
+    </div>
+
+    <div class="page-layout" style="display: flex;">
+        <!-- Consistent Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-title">Learning</div>
+            <nav>
+                <a href="index.html" class="menu-item">🏠 Dashboard</a>
+                <a href="courses.html" class="menu-item">📚 Course View</a>
+                <a href="leaderboard.html" class="menu-item">🏆 Leaderboard</a>
+                <a href="flowchart.html" class="menu-item active">📊 Flowchart</a>
+            </nav>
+            <div class="sidebar-title">Account</div>
+            <nav>
+                <a href="profile.html" class="menu-item">👤 Profile</a>
+            </nav>
+        </aside>
+
+        <!-- Main Flowchart Panel -->
+        <main class="main-panel">
+            <div class="content-header">
+                <h1>ProximaLMS Flowchart</h1>
+                <p style="color: var(--text-muted); margin-top: 5px;">Visual representation of the course enrollment and exam processes.</p>
+            </div>
+
+            <!-- Course Enrollment Flowchart -->
+            <div class="chart-panel">
+                <h3>Course Enrollment Process</h3>
+                <div class="mermaid">
+                    graph TD
+                        A[Select Course] --> B[Apply Coupon]
+                        B --> C[Apply Referral]
+                        C --> D[Payment Gateway]
+                        D --> E[Success]
+                        D --> F[Failure]
+                </div>
+            </div>
+
+            <!-- Exam Process Flowchart -->
+            <div class="chart-panel" style="margin-top: 30px;">
+                <h3>Exam Generation and Assessment Process</h3>
+                <div class="mermaid">
+                    graph TD
+                        G[Admin creates Question Bank] --> H[Creates Exam Template]
+                        H --> I[System generates Paper]
+                        I --> J[Student Dashboard]
+                        J --> K[Progress / Certificates / Rank / Reward]
+                </div>
+            </div>
+
+            <div class="chart-panel" style="margin-top: 30px;">
+                <h3>Download Full Flowchart Document</h3>
+                <p>For detailed requirements and features, download the original document.</p>
+                <a href="ProximaLMS_Flowchart.docx" download style="display: inline-block; padding: 10px 20px; background: var(--purple-primary); color: white; text-decoration: none; border-radius: 8px;">Download DOCX</a>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html></content>
+<parameter name="filePath">c:\Users\upend\Downloads\proxima-main\flowchart.html

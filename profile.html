@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile - ProximaLMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --udemy-gray: #2d2f31;
+            --udemy-border: #d1d7dc;
+            --udemy-bg: #f7f9fa;
+            --primary-purple: #4B1D6B;
+        }
+
+        body {
+            background-color: white;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            display: flex;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            gap: 40px;
+        }
+
+        /* Sidebar Styling */
+        .profile-sidebar {
+            width: 260px;
+            flex-shrink: 0;
+        }
+
+        .user-avatar-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .avatar-circle {
+            width: 120px;
+            height: 120px;
+            background-color: var(--udemy-gray);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            margin: 0 auto 15px;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-nav a {
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--udemy-gray);
+            font-size: 15px;
+            transition: background 0.2s;
+        }
+
+        .sidebar-nav a.active {
+            background-color: #6a1b9a;
+            color: white;
+            font-weight: bold;
+        }
+
+        .sidebar-nav a:hover:not(.active) {
+            background-color: var(--udemy-bg);
+        }
+
+        /* Main Content Styling */
+        .profile-content {
+            flex-grow: 1;
+        }
+
+        .content-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--udemy-border);
+            padding-bottom: 20px;
+        }
+
+        .content-header h1 {
+            font-size: 24px;
+            margin: 0 0 8px 0;
+        }
+
+        .content-header p {
+            color: #6a6f73;
+            margin: 0;
+        }
+
+        .form-section {
+            margin-bottom: 35px;
+        }
+
+        .form-section h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .input-group input, 
+        .input-group select, 
+        .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--udemy-gray);
+            font-size: 16px;
+            box-sizing: border-box;
+            outline-color: var(--primary-purple);
+        }
+
+        .helper-text {
+            font-size: 12px;
+            color: #6a6f73;
+            margin-top: 6px;
+        }
+
+        .char-counter {
+            text-align: right;
+            font-size: 12px;
+            color: #6a6f73;
+        }
+
+        .bio-toolbar {
+            border: 1px solid var(--udemy-gray);
+            border-bottom: none;
+            padding: 8px;
+            background: #f8f9fa;
+            display: flex;
+            gap: 15px;
+        }
+
+        .bio-toolbar i {
+            cursor: pointer;
+            color: #2d2f31;
+        }
+
+        .save-button {
+            background-color: var(--udemy-gray);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .save-button:hover {
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .profile-container {
+                flex-direction: column;
+            }
+            .profile-sidebar {
+                width: 100%;
+                border-bottom: 1px solid var(--udemy-border);
+                padding-bottom: 20px;
+            }
+            .sidebar-nav {
+                flex-direction: row;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="ttr-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="index.html">
+                    <img src="kalpra-logo.png" alt="ProximaLMS Logo" class="header-logo">
+                </a>
+            </div>
+            <div class="profile-circle" title="Rajasekhar Bevara">RB</div>
+        </div>
+    </header>
+         <div class="page-layout" style="display: flex;">
+        <aside class="sidebar">
+            <div class="sidebar-title">Learning</div>
+            <nav>
+                <a href="index.html" class="menu-item">🏠 Dashboard</a>
+                <a href="courses.html" class="menu-item">📚 Course View</a>
+                <a href="exams.html" class="menu-item active">📝 Exams</a>
+                <a href="login.html" class="menu-item">🚪 Logout</a>
+            </nav>
+        </aside>
+    <div class="profile-container">
+        <!-- Sidebar -->
+        <aside class="profile-sidebar">
+            <div class="user-avatar-section">
+                <div class="avatar-circle">RB</div>
+                <h2 style="font-size: 18px; margin-top: 10px;">Rajasekhar Bevara</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#">View public profile</a>
+                <a href="#" class="active">Profile</a>
+                <a href="#">Photo</a>
+                <a href="#">Account Security</a>
+                <a href="#">Subscriptions</a>
+                <a href="#">Payment methods</a>
+                <a href="#">Privacy</a>
+                <a href="#">Notification preferences</a>
+            </nav>
+        </aside>
+
+        <!-- Main Form Content -->
+        <main class="profile-content">
+            <div class="content-header">
+                <h1>Public profile</h1>
+                <p>Add information about yourself</p>
+            </div>
+
+            <form id="editProfileForm">
+                <!-- Basics Section -->
+                <div class="form-section">
+                    <h3>Basics:</h3>
+                    <div class="input-group">
+                        <input type="text" id="firstName" value="Rajasekhar" placeholder="First Name">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="lastName" value="Bevara" placeholder="Last Name">
+                    </div>
+                    <div class="input-group">
+                        <div style="position: relative;">
+                            <input type="text" id="headline" value="AIML Specialist | Frontend Developer | SQL Expert" maxlength="60">
+                            <div class="char-counter" style="position: absolute; right: 10px; top: 12px;">60</div>
+                        </div>
+                        <p class="helper-text">Add a professional headline like, "Instructor at ProximaLMS" or "Data Scientist."</p>
+                    </div>
+                </div>
+
+                <!-- Biography Section -->
+                <div class="form-section">
+                    <h3>Biography:</h3>
+                    <div class="bio-toolbar">
+                        <i class="fa-solid fa-bold"></i>
+                        <i class="fa-solid fa-italic"></i>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 5px;">
+                        <textarea id="biography" rows="8">I am a specialized developer in AIML, Frontend, and Database management (SQL, MySQL, NoSQL). Currently working on an automatic career-aligned learning path project. 
+
+I am also actively organizing the "శ్రీ శ్రీ శ్రీ దుర్గాదేవి శరన్నవరాత్రి మహోత్సవములు" event, supported by శ్రీ సీతారామ యువజన సంఘం.</textarea>
+                    </div>
+                    <p class="helper-text">Links and coupon codes are not permitted in this section.</p>
+                </div>
+
+                <!-- Language Section -->
+                <div class="form-section">
+                    <div class="input-group">
+                        <select id="language">
+                            <option value="en" selected>English (US)</option>
+                            <option value="te">Telugu</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Links Section -->
+                <div class="form-section">
+                    <h3>Links:</h3>
+                    <div class="input-group">
+                        <input type="text" id="website" placeholder="Website (http://...)">
+                    </div>
+                    <div class="input-group">
+                        <div style="display: flex; align-items: center; border: 1px solid var(--udemy-gray); padding-left: 10px;">
+                            <span>http://twitter.com/</span>
+                            <input type="text" id="twitter" placeholder="Username" style="border: none;">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div style="display: flex; align-items: center; border: 1px solid var(--udemy-gray); padding-left: 10px;">
+                            <span>http://linkedin.com/</span>
+                            <input type="text" id="linkedin" placeholder="Resource ID" style="border: none;">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="save-button" onclick="saveProfile()">Save</button>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        function saveProfile() {
+            // Get values from the form
+            const profileData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                headline: document.getElementById('headline').value,
+                bio: document.getElementById('biography').value
+            };
+
+            // Save to LocalStorage to reflect changes on dashboard immediately
+            localStorage.setItem('userName', profileData.firstName + ' ' + profileData.lastName);
+            localStorage.setItem('userHeadline', profileData.headline);
+            
+            alert('Profile updated successfully!');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

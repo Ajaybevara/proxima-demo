@@ -1,1 +1,1 @@
-# proxima-demo
+# proxima

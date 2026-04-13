@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - ProximaLMS</title>
+    <style>
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #7e32d4; /* Purple background from your screenshot */
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: left;
+        }
+
+        h2 { margin: 0 0 10px 0; color: #333; font-size: 24px; }
+        
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; color: #555; font-size: 14px; }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            background-color: #e8f0fe;
+            border: 1px solid #d1d9e6;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #8e44ad, #7e32d4);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover { opacity: 0.9; }
+
+        .footer-link {
+            text-align: left;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .footer-link a {
+            color: #7e32d4;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h2>Admin Login - ProximaLMS</h2>
+        
+        <form id="adminLoginForm">
+            <div class="input-group">
+                <label>Admin Email</label>
+                <input type="email" id="adminEmail" value="admin@proxima.com" required>
+            </div>
+            
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="adminPassword" value="password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Admin Login</button>
+        </form>
+        
+        <div class="footer-link">
+            Student? <a href="login.html">Student Login</a>
+        </div>
+    </div>
+
+    <script>
+        // This script handles the redirect and prevents the loop
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // STOPS the page from refreshing/looping
+            
+            console.log("Admin authenticated. Redirecting...");
+            
+            // This must match the exact filename of your admin dashboard
+            window.location.href = 'admin-dashboard.html';
+        });
+    </script>
+</body>
+</html>

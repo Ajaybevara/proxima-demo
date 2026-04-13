@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ProximaLMS - Payment Success</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   <header class="ttr-header">
+    <div class="header-container">
+        <div class="logo-area">
+            <a href="index.html">
+                <img src="kalpra-logo.png" alt="ProximaLMS Logo" class="header-logo">
+            </a>
+        </div>
+        <div class="profile-circle" title="Rajasekhar Bevara">RB</div>
+    </div>
+</header>
+
+    <div class="marquee-ticker"><div class="marquee-content">🎉 Payment Successful! Welcome to your courses.</div></div>
+
+    <div class="page-layout">
+        <aside class="sidebar">
+            <div class="sidebar-title">Learning</div>
+            <a href="index.html" class="menu-item">🏠 Dashboard</a>
+            <a href="courses.html" class="menu-item">📚 Course View</a>
+            <a href="leaderboard.html" class="menu-item">🏆 Leaderboard</a>
+        </aside>
+
+        <main class="main-panel">
+            <div class="content-header">
+                <h1>Payment Successful!</h1>
+                <p>You have successfully enrolled in the following courses:</p>
+            </div>
+
+            <div id="enrolledCourses" style="margin-top: 20px;"></div>
+
+            <a href="index.html" style="display: inline-block; padding: 15px 30px; background: var(--purple-gradient); color: white; text-decoration: none; border-radius: 14px; font-weight: bold; margin-top: 20px;">Go to Dashboard</a>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const enrolledDiv = document.getElementById('enrolledCourses');
+            enrolledDiv.innerHTML = cart.map(item => `
+                <div style="padding: 15px; background: #f4f5fb; border-radius: 12px; margin-bottom: 10px;">
+                    <h3>${item.title}</h3>
+                    <p>Start learning now!</p>
+                </div>
+            `).join('');            // Store last purchase before clearing
+            localStorage.setItem('lastPurchase', JSON.stringify(cart));            // Clear cart after success
+            localStorage.setItem('cart', JSON.stringify([]));
+        });
+    </script>
+</body>
+</html></content>
+<parameter name="filePath">c:\Users\upend\Downloads\proxima-main\success.html

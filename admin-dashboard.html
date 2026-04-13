@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - ProximaLMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Tab Switching Logic */
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+
+        /* Responsive Design for Admin Dashboard */
+        @media (max-width: 1024px) {
+            .page-layout { flex-direction: column !important; }
+            .sidebar { width: 100% !important; flex-direction: row !important; overflow-x: auto !important; padding: 10px !important; }
+            .sidebar nav { display: flex !important; gap: 10px !important; white-space: nowrap !important; }
+            .main-panel { width: 100% !important; }
+        }
+
+        @media (max-width: 768px) {
+            .chart-panel { padding: 15px !important; margin-top: 20px !important; }
+            table { font-size: 0.85rem !important; }
+            th, td { padding: 8px !important; }
+            .admin-stats { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+    </style>
+</head>
+<body>
+    <header class="ttr-header">
+    <div class="header-container">
+        <div class="logo-area">
+            <a href="index.html">
+                <img src="kalpra-logo.png" alt="ProximaLMS Logo" class="header-logo">
+            </a>
+        </div>
+        <div class="profile-circle" title="Admin">A</div>
+    </div>
+</header>
+
+    <div class="marquee-ticker">
+        <div class="marquee-content" id="marquee-admin">
+            <span class="marquee-item">👑 Admin Dashboard - Student Analytics</span>
+            <span class="marquee-item">📊 Monitor Progress & Performance</span>
+            <span class="marquee-item">🚀 Manage Courses & Enrollments</span>
+        </div>
+    </div>
+
+    <div class="page-layout" style="display: flex;">
+        <aside class="sidebar">
+            <div class="sidebar-title">Admin</div>
+            <nav>
+                <a href="javascript:void(0)" onclick="showSection('dashboard')" id="nav-dashboard" class="menu-item active">📊 Dashboard</a>
+                <a href="javascript:void(0)" onclick="showSection('analytics')" id="nav-analytics" class="menu-item">📈 Analytics</a>
+                <a href="javascript:void(0)" onclick="showSection('courses')" id="nav-courses" class="menu-item">📚 Courses</a>
+                <a href="javascript:void(0)" onclick="showSection('users')" id="nav-users" class="menu-item">👥 Users</a>
+            </nav>
+            <div class="sidebar-title">Account</div>
+            <nav>
+                <a href="javascript:void(0)" onclick="adminLogout()" class="menu-item">🚪 Logout</a>
+            </nav>
+        </aside>
+
+        <main class="main-panel">
+            <!-- DASHBOARD SECTION -->
+            <section id="dashboard" class="content-section active">
+                <div class="content-header">
+                    <h1>Student Information Dashboard</h1>
+                    <p>Monitor student progress, performance, and engagement.</p>
+                </div>
+
+                <div class="chart-panel">
+                    <h3>Student Statistics</h3>
+                    <div style="display: flex; gap: 20px; margin-top: 20px;">
+                        <div style="flex: 1; text-align: center; padding: 20px; background: #f4f5fb; border-radius: 8px;">
+                            <h2 id="totalStudents">0</h2>
+                            <p>Total Students</p>
+                        </div>
+                        <div style="flex: 1; text-align: center; padding: 20px; background: #f4f5fb; border-radius: 8px;">
+                            <h2 id="activeStudents">0</h2>
+                            <p>Active This Month</p>
+                        </div>
+                        <div style="flex: 1; text-align: center; padding: 20px; background: #f4f5fb; border-radius: 8px;">
+                            <h2 id="avgProgress">0%</h2>
+                            <p>Avg Progress</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-panel" style="margin-top: 30px;">
+                    <h3>Recent Student Activity</h3>
+                    <div id="studentsList" style="margin-top: 20px;"></div>
+                </div>
+            </section>
+
+            <!-- ANALYTICS SECTION -->
+            <section id="analytics" class="content-section">
+                <div class="content-header">
+                    <h1>Detailed Analytics</h1>
+                    <p>Financial and engagement reports for all courses.</p>
+                </div>
+                <div class="chart-panel">
+                    <h3>Course Revenue & Enrollments</h3>
+                    <div id="enrollmentsList" style="margin-top: 20px;"></div>
+                </div>
+            </section>
+
+            <!-- COURSES SECTION -->
+            <section id="courses" class="content-section">
+                <div class="content-header">
+                    <h1>Course Management</h1>
+                    <p>Create, edit, or remove courses from the platform.</p>
+                </div>
+                <div class="chart-panel">
+                    <h4>Add New Course</h4>
+                    <form id="addCourseForm" style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <input type="text" id="courseTitle" placeholder="Course Title" required style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                        <input type="number" id="coursePrice" placeholder="Price (₹)" required style="width: 120px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                        <input type="text" id="courseImg" placeholder="Image URL" required style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                        <button type="submit" style="padding: 10px 20px; background: #4B1D6B; color: white; border: none; border-radius: 8px; cursor: pointer;">Add Course</button>
+                    </form>
+                    
+                    <h4>Live Courses</h4>
+                    <div id="coursesManagementList" style="margin-top: 20px;"></div>
+                </div>
+            </section>
+
+            <!-- USERS SECTION -->
+            <section id="users" class="content-section">
+                <div class="content-header">
+                    <h1>User Management</h1>
+                    <p>Manage student accounts and permissions.</p>
+                </div>
+                <div class="chart-panel">
+                    <h3>All Registered Students</h3>
+                    <div id="userManagementList" style="margin-top: 20px;"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Tab switching logic
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Deactivate all nav items
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // Show target section
+            document.getElementById(sectionId).classList.add('active');
+            // Activate target nav item
+            document.getElementById('nav-' + sectionId).classList.add('active');
+        }
+
+        // Mock Data
+        const mockStudents = [
+            { id: 1, name: 'Rajasekhar Bevara', email: 'rajasekhar@example.com', courses: 13, progress: 82, certificates: 3, rank: 6, status: 'Active' },
+            { id: 2, name: 'Sebastian', email: 'sebastian@example.com', courses: 15, progress: 95, certificates: 5, rank: 1, status: 'Active' },
+            { id: 3, name: 'Riya W.', email: 'riya@example.com', courses: 12, progress: 88, certificates: 4, rank: 2, status: 'Active' }
+        ];
+
+        const courseEnrollments = [
+            { title: 'Generative AI Mastery', enrollments: 45, revenue: 22455 },
+            { title: 'SQL for AI Engineers', enrollments: 38, revenue: 0 },
+            { title: 'Deep Learning Bootcamp', enrollments: 32, revenue: 17568 }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Populate Dashboard Stats
+            document.getElementById('totalStudents').innerText = mockStudents.length;
+            document.getElementById('activeStudents').innerText = mockStudents.length;
+            document.getElementById('avgProgress').innerText = '88%';
+
+            // Populate Student List
+            const studentsList = document.getElementById('studentsList');
+            studentsList.innerHTML = `
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead style="background: #f4f5fb;">
+                        <tr>
+                            <th style="padding: 10px; text-align: left;">Name</th>
+                            <th style="padding: 10px; text-align: center;">Progress</th>
+                            <th style="padding: 10px; text-align: center;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${mockStudents.map(s => `
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 10px;">${s.name}</td>
+                                <td style="padding: 10px; text-align: center;">${s.progress}%</td>
+                                <td style="padding: 10px; text-align: center; color: green;">${s.status}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            // Populate Analytics
+            const enrollmentsList = document.getElementById('enrollmentsList');
+            enrollmentsList.innerHTML = courseEnrollments.map(c => `
+                <div style="padding: 15px; background: #f9f9f9; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between;">
+                    <span>${c.title}</span>
+                    <strong>₹${c.revenue} (${c.enrollments} users)</strong>
+                </div>
+            `).join('');
+
+            // Populate User Management
+            const userManagementList = document.getElementById('userManagementList');
+            userManagementList.innerHTML = mockStudents.map(s => `
+                <div style="padding: 15px; border: 1px solid #eee; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                    <div><strong>${s.name}</strong><br><small>${s.email}</small></div>
+                    <button style="color: red; border: none; background: none; cursor: pointer;">Delete User</button>
+                </div>
+            `).join('');
+
+            loadCourses();
+        });
+
+        // Course Management
+        function loadCourses() {
+            const courses = JSON.parse(localStorage.getItem('courses')) || [
+                { title: "Generative AI Mastery", price: 499 },
+                { title: "Deep Learning Bootcamp", price: 549 }
+            ];
+            const coursesList = document.getElementById('coursesManagementList');
+            coursesList.innerHTML = courses.map((course, index) => `
+                <div style="padding: 15px; background: white; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #eee;">
+                    <div><strong>${course.title}</strong><br>₹${course.price}</div>
+                    <button onclick="removeCourse(${index})" style="padding: 5px 10px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        function addCourse(event) {
+            event.preventDefault();
+            const title = document.getElementById('courseTitle').value;
+            const price = document.getElementById('coursePrice').value;
+            const courses = JSON.parse(localStorage.getItem('courses')) || [];
+            courses.push({ title, price });
+            localStorage.setItem('courses', JSON.stringify(courses));
+            loadCourses();
+            document.getElementById('addCourseForm').reset();
+        }
+
+        function removeCourse(index) {
+            const courses = JSON.parse(localStorage.getItem('courses')) || [];
+            courses.splice(index, 1);
+            localStorage.setItem('courses', JSON.stringify(courses));
+            loadCourses();
+        }
+
+        document.getElementById('addCourseForm').addEventListener('submit', addCourse);
+
+        function adminLogout() {
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

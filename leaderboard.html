@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProximaLMS - Leaderboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Responsive Design for Leaderboard */
+        @media (max-width: 768px) {
+            table {
+                font-size: 0.85rem !important;
+            }
+
+            th, td {
+                padding: 10px !important;
+            }
+
+            .rank-medal {
+                font-size: 1.2rem !important;
+            }
+
+            .leaderboard-title {
+                font-size: 1.5rem !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .main-panel {
+                padding: 15px !important;
+            }
+
+            table {
+                font-size: 0.75rem !important;
+            }
+
+            th, td {
+                padding: 8px !important;
+            }
+
+            .leaderboard-title {
+                font-size: 1.2rem !important;
+                margin-bottom: 20px !important;
+            }
+
+            .badge {
+                padding: 3px 6px !important;
+                font-size: 0.7rem !important;
+            }
+
+            tbody tr {
+                margin-bottom: 10px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Professional Header -->
+   <header class="ttr-header">
+    <div class="header-container">
+        <div class="logo-area">
+            <a href="index.html">
+                <img src="kalpra-logo.png" alt="ProximaLMS Logo" class="header-logo">
+            </a>
+        </div>
+        <div class="profile-circle" title="Rajasekhar Bevara">RB</div>
+    </div>
+</header>
+
+    <!-- Slow Moving Marquee -->
+    <div class="marquee-ticker">
+        <div class="marquee-content" id="marquee-leaderboard">
+            <span class="marquee-item">🏆 Top Performer: Sebastian (1300 pts)</span>
+            <span class="marquee-item">🚀 New Course: Generative AI Mastery — Enroll Now!</span>
+            <span class="marquee-item">🌟 Rajasekhar Bevara climbed to Rank #6 this week!</span>
+            <span class="marquee-item">🔥 Trending: SQL for AI Engineers is the most viewed course today.</span>
+        </div>
+    </div>
+
+    <div class="page-layout" style="display: flex;">
+        <!-- Consistent Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-title">Learning</div>
+            <nav>
+                <a href="index.html" class="menu-item">🏠 Dashboard</a>
+                <a href="courses.html" class="menu-item">📚 Course View</a>
+                <a href="leaderboard.html" class="menu-item active">🏆 Leaderboard</a>
+                <a href="exams.html" class="menu-item">📝 Exams</a>
+                <a href="#" onclick="logout()" class="menu-item">🚪 Logout</a>
+            </nav>
+            <div class="sidebar-title">Account</div>
+            <nav>
+                <a href="profile.html" class="menu-item">👤 Profile</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-panel">
+            <div class="content-header">
+                <h1 style="font-size: 2.2rem; font-weight: 900; color: var(--text-main);">Global Leaderboard</h1>
+                <p style="color: var(--text-muted); margin-top: 5px;">Compete with 1,240+ learners in AIML and Career Mapping projects.</p>
+            </div>
+
+            <!-- Podium Section (Top 3) -->
+            <div class="podium">
+                <!-- 2nd Place -->
+                <div class="podium-card silver">
+                    <div style="width: 70px; height: 70px; background: #eee; border-radius: 50%; margin: 0 auto 15px; display: grid; place-items: center; font-size: 1.5rem; font-weight: bold; color: #777;">RW</div>
+                    <strong>Riya W.</strong>
+                    <p style="color: var(--purple-primary); font-weight: 700; margin-top: 5px;">1240 pts</p>
+                </div>
+                <!-- 1st Place -->
+                <div class="podium-card gold">
+                    <div style="width: 90px; height: 90px; background: #fdf2d0; border-radius: 50%; margin: 0 auto 15px; display: grid; place-items: center; font-size: 2rem; font-weight: bold; color: #b48a06; border: 3px solid #ffd700;">S</div>
+                    <strong style="font-size: 1.2rem;">Sebastian</strong>
+                    <p style="color: var(--purple-primary); font-weight: 900; margin-top: 5px;">1300 pts</p>
+                </div>
+                <!-- 3rd Place -->
+                <div class="podium-card bronze">
+                    <div style="width: 60px; height: 60px; background: #fceee8; border-radius: 50%; margin: 0 auto 15px; display: grid; place-items: center; font-size: 1.3rem; font-weight: bold; color: #8a4d3b;">AK</div>
+                    <strong>Arjun K.</strong>
+                    <p style="color: var(--purple-primary); font-weight: 700; margin-top: 5px;">1120 pts</p>
+                </div>
+            </div>
+
+            <!-- Full Ranking List -->
+            <div style="max-width: 900px; margin: 0 auto; padding-bottom: 50px;">
+                <div class="leader-row">
+                    <span style="color: var(--text-muted);">4</span>
+                    <strong style="flex: 1; margin-left: 20px;">Kavya N.</strong>
+                    <span style="color: var(--purple-primary); font-weight: 800;">1085 pts</span>
+                </div>
+                <div class="leader-row">
+                    <span style="color: var(--text-muted);">5</span>
+                    <strong style="flex: 1; margin-left: 20px;">Dinesh M.</strong>
+                    <span style="color: var(--purple-primary); font-weight: 800;">950 pts</span>
+                </div>
+                
+                <!-- Highlighted Current User: Rajasekhar Bevara -->
+                <div class="leader-row highlight">
+                    <span style="background: var(--success); color: white; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 0.8rem;">6</span>
+                    <strong style="flex: 1; margin-left: 20px;">Rajasekhar Bevara (You)</strong>
+                    <span style="color: var(--purple-primary); font-weight: 900; font-size: 1.1rem;">890 pts</span>
+                </div>
+
+                <div class="leader-row">
+                    <span style="color: var(--text-muted);">7</span>
+                    <strong style="flex: 1; margin-left: 20px;">Sam Dev</strong>
+                    <span style="color: var(--purple-primary); font-weight: 800;">750 pts</span>
+                </div>
+                <div class="leader-row">
+                    <span style="color: var(--text-muted);">8</span>
+                    <strong style="flex: 1; margin-left: 20px;">Nisha R.</strong>
+                    <span style="color: var(--purple-primary); font-weight: 800;">620 pts</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

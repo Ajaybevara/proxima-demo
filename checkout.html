@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ProximaLMS - Checkout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        /* Responsive Design for Checkout */
+        @media (max-width: 1024px) {
+            .checkout-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .checkout-left {
+                padding: 20px !important;
+            }
+
+            .checkout-right {
+                padding: 20px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+
+            .checkout-card {
+                padding: 15px !important;
+                border-radius: 10px !important;
+            }
+
+            .checkout-card h3 {
+                font-size: 1.1rem !important;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="number"],
+            select {
+                padding: 10px !important;
+                font-size: 14px !important;
+            }
+
+            button {
+                padding: 10px 15px !important;
+                font-size: 0.9rem !important;
+            }
+
+            .cart-item {
+                padding: 10px !important;
+                flex-direction: column !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .main-panel {
+                padding: 15px !important;
+            }
+
+            .checkout-card {
+                padding: 12px !important;
+                margin-bottom: 15px !important;
+            }
+
+            .checkout-card h3 {
+                font-size: 0.95rem !important;
+                margin-bottom: 12px !important;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="number"],
+            select {
+                padding: 8px !important;
+                font-size: 14px !important;
+                width: 100% !important;
+                border-radius: 6px !important;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="number"],
+            select {
+                margin-bottom: 10px !important;
+            }
+
+            button {
+                width: 100% !important;
+                padding: 12px !important;
+                font-size: 0.95rem !important;
+                border-radius: 6px !important;
+            }
+
+            .cart-item {
+                padding: 10px !important;
+                margin-bottom: 10px !important;
+                border-radius: 6px !important;
+            }
+
+            #qrcode {
+                text-align: center !important;
+                margin: 15px 0 !important;
+            }
+
+            #qrcode img {
+                max-width: 100% !important;
+                height: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="ttr-header">
+    <div class="header-container">
+        <div class="logo-area">
+            <a href="index.html">
+                <img src="kalpra-logo.png" alt="ProximaLMS Logo" class="header-logo">
+            </a>
+        </div>
+        <div class="profile-circle" title="Rajasekhar Bevara">RB</div>
+    </div>
+</header>
+
+    <div class="marquee-ticker"><div class="marquee-content" id="marquee-checkout"></div></div>
+
+    <div class="page-layout">
+        <aside class="sidebar">
+            <div class="sidebar-title">Learning</div>
+            <a href="index.html" class="menu-item">🏠 Dashboard</a>
+            <a href="courses.html" class="menu-item">📚 Course View</a>
+            <a href="leaderboard.html" class="menu-item">🏆 Leaderboard</a>
+        </aside>
+
+        <main class="main-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+                <h1 style="font-weight:900;">CHECKOUT</h1>
+            </div>
+
+            <div class="course-page-layout">
+                <div style="flex: 1;">
+                    <div class="chart-panel">
+                        <h3>Your Cart</h3>
+                        <div id="checkoutCart" style="margin-top: 20px;"></div>
+                        <div style="margin-top: 20px; padding: 20px; background: #f4f5fb; border-radius: 12px;">
+                            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                <input type="text" id="couponInput" placeholder="Enter Coupon Code" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                                <button onclick="applyCoupon()" style="padding: 10px 20px; background: var(--purple-primary); color: white; border: none; border-radius: 8px; cursor: pointer;">Apply</button>
+                            </div>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="referralInput" placeholder="Enter Referral Code" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                                <button onclick="applyReferral()" style="padding: 10px 20px; background: var(--purple-primary); color: white; border: none; border-radius: 8px; cursor: pointer;">Apply</button>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px; font-size: 1.2rem; font-weight: bold;">
+                            Total: ₹<span id="totalAmount">0</span>
+                        </div>
+                        <button id="payBtn" onclick="payNow()" style="width: 100%; padding: 15px; background: var(--purple-gradient); color: white; border: none; border-radius: 14px; cursor: pointer; font-weight: bold; margin-top: 20px;">Pay Now</button>
+                        
+                        <!-- QR Code Section -->
+                        <div id="qrSection" style="display: none; margin-top: 30px; text-align: center;">
+                            <h3>Scan QR Code to Pay</h3>
+                            <div id="qrcode" style="display: flex; justify-content: center; margin: 20px 0;"></div>
+                            <p style="color: var(--text-muted); margin-bottom: 20px;">Amount: ₹<span id="qrAmount">0</span></p>
+                            <button onclick="confirmPayment()" style="width: 100%; padding: 12px; background: var(--success); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 10px;">Confirm Payment</button>
+                            <button onclick="cancelPayment()" style="width: 100%; padding: 12px; background: #f4f5fb; color: var(--text-main); border: 2px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold;">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        let total = 0;
+        let discount = 0;
+
+        function logout() {
+            localStorage.clear();
+            window.location = 'login.html';
+        }
+
+        function loadCheckout() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartDiv = document.getElementById('checkoutCart');
+            total = cart.reduce((sum, item) => sum + item.price, 0);
+            cartDiv.innerHTML = cart.map(item => `
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 10px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <img src="${item.img}?w=50" style="width: 50px; height: 50px; border-radius: 8px;">
+                    <div style="flex: 1;">
+                        <h4 style="margin: 0; font-size: 1rem;">${item.title}</h4>
+                        <p style="margin: 0; color: var(--text-muted);">₹${item.price}</p>
+                    </div>
+                </div>
+            `).join('');
+            updateTotal();
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById('couponInput').value;
+            if (code === 'DISCOUNT10') {
+                discount = total * 0.1;
+                alert('Coupon applied! 10% discount.');
+            } else {
+                discount = 0;
+                alert('Invalid coupon code.');
+            }
+            updateTotal();
+        }
+
+        function applyReferral() {
+            const code = document.getElementById('referralInput').value;
+            if (code === 'REF5') {
+                discount += total * 0.05;
+                alert('Referral applied! 5% discount.');
+            } else {
+                alert('Invalid referral code.');
+            }
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const finalTotal = Math.max(total - discount, 0);
+            document.getElementById('totalAmount').innerText = finalTotal;
+            document.getElementById('qrAmount').innerText = finalTotal;
+        }
+
+        let finalTotal = 0;
+
+        function payNow() {
+            finalTotal = Math.max(total - discount, 0);
+            if (finalTotal === 0) {
+                alert('Cart is empty or total is zero');
+                return;
+            }
+            
+            // Hide pay button and show QR section
+            document.getElementById('payBtn').style.display = 'none';
+            document.getElementById('qrSection').style.display = 'block';
+            
+            // Generate QR code
+            document.getElementById('qrcode').innerHTML = '';
+            new QRCode(document.getElementById('qrcode'), {
+                text: 'UPI://pay?pa=proximalms@ybl&pn=ProximaLMS&am=' + finalTotal + '&tn=Course%20Payment',
+                width: 200,
+                height: 200,
+                colorDark: '#5f1cd9',
+                colorLight: '#ffffff'
+            });
+        }
+
+        function confirmPayment() {
+            // Simulate payment processing
+            document.getElementById('qrSection').innerHTML = '<h3>Processing Payment...</h3>';
+            setTimeout(() => {
+                window.location = 'success.html';
+            }, 1500);
+        }
+
+        function cancelPayment() {
+            document.getElementById('payBtn').style.display = 'block';
+            document.getElementById('qrSection').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCheckout);
+    </script>
+</body>
+</html></content>
+<parameter name="filePath">c:\Users\upend\Downloads\proxima-main\checkout.html
