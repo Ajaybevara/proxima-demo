@@ -119,16 +119,18 @@
             <a href="checkout.html" style="width:100%; padding:15px; background:var(--purple-gradient); color:white; border:none; border-radius:14px; cursor:pointer; font-weight:bold; margin-top:10px; display:inline-block; text-align:center; text-decoration:none;">Checkout Now</a>
         </div>
 
-        <div class="side-card">
-            <h3 style="color:var(--purple-primary);">🤖 Proxima AI Chat</h3>
-            <div class="chat-window" id="chatWindow">
-                <div class="msg-ai">AI: Hi Rajasekhar! Ready to map your AIML skills today?</div>
-            </div>
-            <div style="display:flex; gap:10px;">
-                <input type="text" id="chatInput" placeholder="Ask roadmaps..." style="flex:1; padding:12px; border-radius:10px; border:1px solid #eef0ff; outline:none;">
-                <button onclick="sendChat()" style="background:var(--purple-primary); color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:bold;">Send</button>
-            </div>
+       <div class="side-card">
+    <h3 style="color:var(--purple-primary);">🤖 Proxima AI Chat</h3>
+    <div class="chat-window" id="chatWindow" style="height: 300px; overflow-y: auto; margin-bottom: 15px; padding: 10px; background: #f8f9ff; border-radius: 10px; display: flex; flex-direction: column; gap: 10px;">
+        <div class="msg-ai" style="background: white; padding: 8px 12px; border-radius: 10px; border: 1px solid #eef0ff; align-self: flex-start; max-width: 85%; font-size: 14px;">
+            AI: Hi Rajasekhar! Ready to map your AIML skills today?
         </div>
+    </div>
+    <div style="display:flex; gap:10px;">
+        <input type="text" id="chatInput" placeholder="Ask roadmaps..." onkeypress="if(event.key === 'Enter') sendChat()" style="flex:1; padding:12px; border-radius:10px; border:1px solid #eef0ff; outline:none;">
+        <button onclick="sendChat()" style="background:var(--purple-primary); color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:bold;">Send</button>
+    </div>
+</div>
         <div class="side-card">
             <h3>📄 Invoice</h3>
             <p>Download your purchase invoice.</p>
@@ -165,6 +167,107 @@
             doc.text(`Total: ₹${total}`, 20, y);
             doc.save('ProximaLMS_Invoice.pdf');
         }
+
+       const ProximaChatData = {
+    "hi": "Hello! I'm Proxima AI. Ready to map your AIML skills today?",
+    "hello": "Hi there! How can I help you navigate your AI career journey?",
+    "hey": "Hey! Looking for a specific course or a career roadmap?",
+    "how are you": "I'm running at optimal speed and ready to help you learn! How about you?",
+    "who are you": "I am ProximaBot, your AI-driven career guide and learning assistant.",
+    "name": "My name is ProximaBot. I was built to help you master AI.",
+    "good morning": "Good morning! A great day to start a new lesson in AI.",
+    "good afternoon": "Good afternoon! Hope your learning progress is going well today.",
+    "bye": "Goodbye! Don't forget to check your updated roadmap next time.",
+    "thanks": "You're welcome! Happy learning!",
+    "thank you": "No problem! I'm here whenever you have doubts.",
+    "help": "You can ask me about 'courses', 'free classes', 'exams', or 'how to build a roadmap'.",
+    
+    // DEVELOPER & EVENTS (Based on your profile)
+    "developer": "ProximaLMS was developed by Rajasekhar Bevara, an AIML and Frontend expert.",
+    "who made this": "This platform is the vision of Rajasekhar Bevara, focusing on automated career paths.",
+    "rajasekhar": "Rajasekhar Bevara is a technical developer skilled in AIML, SQL, and Frontend development.",
+    "bevara": "Rajasekhar Bevara is the lead developer here. He also organizes major community cultural events!",
+    "skills": "Rajasekhar is an expert in AIML, Frontend, SQL, MySQL, and NoSQL databases.",
+    "pujas": "Rajasekhar organizes the Sri Sri Sri Durga Devi Sharannavarathri Mahotsavamulu event.",
+    "donations": "Community events are supported by Sri Sitarama Yuvajana Sangham and Koragam villagers.",
+    "event": "Major upcoming events include Narayana Samaradhana and Ammavari Tiruveedhi in October.",
+    "hosting": "This site is professionally deployed and hosted using Firebase.",
+    "vision": "The vision is to use AI to automatically align learning paths with industry needs.",
+
+    // COURSES & RECOMMENDATIONS
+    "courses": "We offer Generative AI, SQL for AI, Deep Learning, MLOps, Data Science, and more.",
+    "recommend": "If you are a beginner, start with 'Data Science A-Z'. For experts, try 'Generative AI Mastery'.",
+    "best course": "Our most popular course is 'Generative AI Mastery' with a 4.9-star rating.",
+    "free courses": "We have free courses: SQL for AI Engineers, Data Science A-Z, and AI Ethics.",
+    "paid courses": "Our premium courses include Generative AI Mastery (₹499) and MLOps Pro (₹699).",
+    "generative ai": "The GenAI course covers Transformers, Prompt Engineering, and building AI Agents.",
+    "sql course": "The SQL for AI Engineers course is free and covers DB design for AI applications.",
+    "mlops": "MLOps Professional teaches you to deploy and scale AI models using Docker and K8s.",
+    "deep learning": "Our Deep Learning Bootcamp covers Neural Networks and PyTorch from scratch.",
+    "data science": "Data Science A-Z covers everything from Statistics to Predictive Modeling.",
+    "python": "Most of our AI courses use Python. It's a prerequisite for most paths.",
+    "enroll": "Go to 'Course View', select a course, and click 'Enroll' or 'Checkout'.",
+    "price": "Prices range from Free to ₹699. We keep it affordable for all engineers.",
+
+    // ROADMAP & SKILL MAPPING
+    "roadmap": "Our AI analyzes your profile to generate a personalized career-aligned learning path.",
+    "career": "Proxima helps you transition into roles like AI Engineer, Data Scientist, or MLOps Specialist.",
+    "path": "Your path is currently 82% complete! Finish the Deep Learning module to reach the next level.",
+    "job": "By completing our specializations, you build a portfolio ready for top AI jobs.",
+    "resume": "Our AI can help suggest keywords for your resume based on completed courses.",
+    "progress": "Your total completion is shown on the Dashboard. You are currently at 82%!",
+    "mapping": "Skill mapping identifies your strengths and gaps in technical knowledge.",
+
+    // EXAMS & CERTIFICATIONS
+    "exam": "Take exams in the 'Exams' section to validate your skills and earn certificates.",
+    "certificate": "Certificates are issued automatically once you pass the final course exam.",
+    "download": "You can download your PDF certificates from the 'Dashboard' or 'Profile'.",
+    "badge": "Earn badges like 'AIML Specialist' by completing specific course groups.",
+    "points": "Passing an exam earns you 100-500 points toward your Global Rank.",
+    "rank": "Your exam scores directly impact your position on the Leaderboard.",
+
+    // TECHNICAL AI DOUBTS
+    "what is ai": "AI is the simulation of human intelligence by machines, especially computer systems.",
+    "machine learning": "ML is a type of AI that allows software to become more accurate at predicting outcomes.",
+    "deep learning": "DL is a subset of ML based on artificial neural networks with multiple layers.",
+    "neural network": "A computer system modeled on the human brain and nervous system.",
+    "transformer": "Transformers are the architecture behind models like GPT, focusing on attention mechanisms.",
+    "llm": "Large Language Models (LLMs) are AI models trained on vast amounts of text data.",
+    "tensorflow": "A powerful library by Google for building and training neural networks.",
+    "pytorch": "A flexible deep learning framework preferred by researchers, developed by Meta.",
+
+    "default": "I'm not sure about that. You can ask about 'courses', 'roadmaps', 'exams', or 'Rajasekhar Bevara'!"
+};
+
+function sendChat() {
+    const input = document.getElementById('chatInput');
+    const window = document.getElementById('chatWindow');
+    const msg = input.value.trim().toLowerCase();
+
+    if (msg === "") return;
+
+    // 1. Add User Message
+    window.innerHTML += `<div style="background: var(--purple-primary); color: white; padding: 8px 12px; border-radius: 10px; align-self: flex-end; max-width: 85%; font-size: 14px;">You: ${input.value}</div>`;
+
+    // 2. Find Response
+    let botResponse = ProximaChatData["default"];
+    for (let key in ProximaChatData) {
+        if (msg.includes(key)) {
+            botResponse = ProximaChatData[key];
+            break;
+        }
+    }
+
+    // 3. Add AI Response with delay
+    setTimeout(() => {
+        window.innerHTML += `<div style="background: white; padding: 8px 12px; border-radius: 10px; border: 1px solid #eef0ff; align-self: flex-start; max-width: 85%; font-size: 14px;">AI: ${botResponse}</div>`;
+        window.scrollTop = window.scrollHeight; // Auto-scroll
+    }, 500);
+
+    input.value = ""; // Clear input
+    window.scrollTop = window.scrollHeight; // Auto-scroll
+}
+
     </script>
 </body>
 </html>

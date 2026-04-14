@@ -120,6 +120,8 @@ function sendChat() {
     input.value = '';
 }
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
     cart = JSON.parse(localStorage.getItem('cart')) || [];
     wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
