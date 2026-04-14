@@ -2,54 +2,169 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Course Detail - ProximaLMS</title>
+    <title>ProximaLMS - Courses</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .course-page-layout {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .right-panel {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .course-search {
+                width: 100% !important;
+                margin-bottom: 20px !important;
+            }
+
+            .course-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 15px !important;
+            }
+
+            .course-card {
+                padding: 10px !important;
+            }
+
+            .card-img {
+                height: 140px !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .course-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+
+            .course-page-layout {
+                flex-direction: column !important;
+            }
+
+            input[type="text"] {
+                padding: 12px !important;
+                font-size: 16px !important;
+            }
+
+            .card-body {
+                padding: 10px !important;
+            }
+
+            .card-img {
+                height: 150px !important;
+            }
+
+            .side-card {
+                margin-top: 20px !important;
+            }
+
+            .right-panel {
+                display: block !important;
+                width: 100% !important;
+            }
+        }
+    </style>
 </head>
 <body>
-    <aside class="sidebar">
-        <div class="sidebar-brand"><h2>ProximaLMS</h2></div>
-        <div class="sidebar-title">Learning</div>
-        <a href="index.html" class="menu-item">🏠 Dashboard</a>
-        <a href="courses.html" class="menu-item active">📚 Course View</a>
-        <a href="leaderboard.html" class="menu-item">🏆 Leaderboard</a>
-        <div class="sidebar-title">Account</div>
-        <a href="profile.html" class="menu-item">👤 Profile</a>
-    </aside>
-
-    <main class="main-panel">
-        <div class="content-header">
-            <button onclick="history.back()" style="background:none; border:none; color:var(--purple-primary); cursor:pointer; font-weight:bold; margin-bottom:10px;">← Back to Courses</button>
-            <h1>Generative AI Mastery</h1>
-            <p>Module 3: Prompt Engineering for Developers</p>
+   <header class="ttr-header">
+    <div class="header-container">
+        <div class="logo-area">
+            <a href="index.html">
+                <img src="kalpra-logo.png" alt="ProximaLMS Logo" class="header-logo">
+            </a>
         </div>
+        <div class="profile-circle" title="Rajasekhar Bevara">RB</div>
+    </div>
+</header>
 
-        <div class="course-page-layout">
-            <div style="flex: 1;">
-                <div style="width: 100%; height: 400px; background: #000; border-radius: 24px; display: grid; place-items: center; color: white; margin-bottom: 20px;">
-                    <p>Video Player Placeholder (Lesson 3.2: Zero-Shot vs Few-Shot)</p>
-                </div>
-                
-                <div class="chart-panel">
-                    <h3>About this Lesson</h3>
-                    <p style="margin-top: 15px; color: var(--text-muted);">In this section, we explore how to structure prompts to get the highest quality output from LLMs. This is a core skill for your personalized AI career roadmap.</p>
-                </div>
+    <div class="marquee-ticker"><div class="marquee-content" id="marquee-courses"></div></div>
+
+    <div class="page-layout">
+        <aside class="sidebar">
+            <div class="sidebar-title">Learning</div>
+            <a href="index.html" class="menu-item">🏠 Dashboard</a>
+            <a href="courses.html" class="menu-item active">📚 Course View</a>
+            <a href="leaderboard.html" class="menu-item">🏆 Leaderboard</a>
+            <a href="exams.html" class="menu-item">📝 Exams</a>
+            <a href="#" onclick="logout()" class="menu-item">🚪 Logout</a>
+        </aside>
+
+        <main class="main-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+                <h1 style="font-weight:900;">ALL COURSES</h1>
+                <input type="text" id="courseSearch" placeholder="Search AI, Data Science, SQL..." 
+                       style="padding:15px 25px; border-radius:15px; border:1px solid #ddd; width:400px; outline:none;" 
+                       onkeyup="filterCourses()">
             </div>
 
-            <div class="right-panel">
-                <div class="hover-preview" style="min-height: auto;">
-                    <h3>Course Content</h3>
-                    <ul class="benefit-list" style="margin-top: 15px;">
-                        <li style="color: var(--success); font-weight: bold;">1. Introduction to LLMs (Completed)</li>
-                        <li style="color: var(--success); font-weight: bold;">2. Tokenization & Sampling (Completed)</li>
-                        <li style="color: var(--purple-primary); font-weight: 800;">3. Prompt Engineering (Current)</li>
-                        <li>4. Fine-tuning Models</li>
-                        <li>5. Vector Databases & RAG</li>
-                        <li>6. Final Capstone Project</li>
-                    </ul>
-                    <button style="width: 100%; padding: 15px; background: var(--purple-gradient); color: white; border: none; border-radius: 12px; margin-top: 20px; font-weight: bold; cursor: pointer;">Next Lesson →</button>
-                </div>
+           <div class="course-page-layout">
+    <div class="course-grid" id="courseGrid"></div>
+
+    <aside class="right-panel">
+        <div class="side-card">
+            <h3>❤️ Wishlist (<span id="wishCount">0</span>)</h3>
+            <div class="item-list-container" id="wishList"></div>
+        </div>
+        
+        <div class="side-card">
+            <h3>🛒 Cart (<span id="cartCount">0</span>)</h3>
+            <div class="item-list-container" id="cartList"></div>
+            <a href="checkout.html" style="width:100%; padding:15px; background:var(--purple-gradient); color:white; border:none; border-radius:14px; cursor:pointer; font-weight:bold; margin-top:10px; display:inline-block; text-align:center; text-decoration:none;">Checkout Now</a>
+        </div>
+
+        <div class="side-card">
+            <h3 style="color:var(--purple-primary);">🤖 Proxima AI Chat</h3>
+            <div class="chat-window" id="chatWindow">
+                <div class="msg-ai">AI: Hi Rajasekhar! Ready to map your AIML skills today?</div>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="chatInput" placeholder="Ask roadmaps..." style="flex:1; padding:12px; border-radius:10px; border:1px solid #eef0ff; outline:none;">
+                <button onclick="sendChat()" style="background:var(--purple-primary); color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:bold;">Send</button>
             </div>
         </div>
-    </main>
+        <div class="side-card">
+            <h3>📄 Invoice</h3>
+            <p>Download your purchase invoice.</p>
+            <button onclick="downloadInvoice()" style="width:100%; padding:15px; background:var(--purple-gradient); color:white; border:none; border-radius:14px; cursor:pointer; font-weight:bold; margin-top:10px;">Download Invoice</button>
+        </div>    </aside>
+</div>
+
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location = 'login.html';
+        }
+
+        function downloadInvoice() {
+            const lastPurchase = JSON.parse(localStorage.getItem('lastPurchase')) || [];
+            if (lastPurchase.length === 0) {
+                alert('No purchases found. Please make a purchase first.');
+                return;
+            }
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text('ProximaLMS Invoice', 20, 20);
+            doc.text('Date: ' + new Date().toLocaleDateString(), 20, 30);
+            let y = 50;
+            lastPurchase.forEach(item => {
+                doc.text(`${item.title} - ₹${item.price}`, 20, y);
+                y += 10;
+            });
+            const total = lastPurchase.reduce((sum, i) => sum + i.price, 0);
+            doc.text(`Total: ₹${total}`, 20, y);
+            doc.save('ProximaLMS_Invoice.pdf');
+        }
+    </script>
 </body>
 </html>
